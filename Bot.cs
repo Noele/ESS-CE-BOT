@@ -1,16 +1,20 @@
 using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Linq;
 
 namespace CommonErrorsBot.CEB
 {
     public class Bot
     {
-        public static string key;
+        public static string Key;
+
+        public static JObject CommonErrors;
         
         private DiscordSocketClient _client;
         private CommandService _commands;
@@ -26,7 +30,9 @@ namespace CommonErrorsBot.CEB
         /// <param name="prefix">Prefix the bot will use to respond to messages</param>
         public async Task StartAsync(string token, string prefix, string key)
         {
-            Bot.key = key;
+            LoadFile();
+                
+            Key = key;
             _prefix = prefix;
             _token = token;
             _client = new DiscordSocketClient(); // Initialise the client
@@ -99,5 +105,17 @@ namespace CommonErrorsBot.CEB
             }
         }
         
+        /// <summary>
+        /// Loads the contents of commonerrors.json into the CommonErrors var
+        /// </summary>
+        public static void LoadFile()
+        {
+            // Read commonerrors.json
+            using (var r = new StreamReader("commonerrors.json"))
+            {
+                var json = r.ReadToEnd();
+                CommonErrors = JObject.Parse(json);
+            }
+        }
     }
 }

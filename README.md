@@ -9,16 +9,7 @@ A "Response" is as it sounds, it's what the bot responds to the picture with, us
 
 ## TO:DO
 <ul>
-    <li>Handle reponse codes from api</li> 
-    <li>Manage possible overflow of GetCommonErrors</li> 
-    <li>Add commands to:</li>
-      <ul>
-           <li>View an errors Search</li>  
-           <li>View an errors Response</li>  
-           <li>View the current file without loading it into memory</li> 
-      </ul>
     <li>Upgrade the ping command so that it shows the actual ms response</li> 
-    <li>Add Premissions so that only admins can use most of the bot</li> 
     <li>Get some sleep</li> 
 </ul>
 

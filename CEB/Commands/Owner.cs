@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Discord;
 using Discord.Audio.Streams;
 using Discord.Commands;
 using Newtonsoft.Json;
@@ -17,6 +18,7 @@ namespace CommonErrorsBot.CEB.Commands
         /// </summary>
         /// <returns></returns>
         [Command("ReloadFile")]
+        [RequireUserPermission(GuildPermission.Administrator)]
         public async Task _reloadFile()
         {
             Bot.LoadFile();
@@ -27,6 +29,7 @@ namespace CommonErrorsBot.CEB.Commands
         /// </summary>
         /// <returns></returns>
         [Command("GetCommonErrors")]
+        [RequireUserPermission(GuildPermission.Administrator)]
         public async Task _getCommonErrors()
         {
             var output = new StringBuilder();
@@ -34,10 +37,34 @@ namespace CommonErrorsBot.CEB.Commands
             foreach (var key in Bot.CommonErrors)
             {
                 output.Append($"{key.Key}\n");
+                if (output.Length > 1800)
+                {
+                    output.Append("```");
+                    await Context.Channel.SendMessageAsync(output.ToString());
+                    output = new StringBuilder();
+                    output.Append("```\n");
+                }
             }
             output.Append("```");
 
             await Context.Channel.SendMessageAsync(output.ToString());
+        }
+
+        [Command("GetCommonErrorProperty")]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        public async Task _getCommonErrorProperty(string key, string property)
+        {
+            string search;
+            try
+            {
+                search = (string) Bot.CommonErrors.SelectToken(key).SelectToken(property);
+            }
+            catch (Exception e)
+            {
+                search = $"Failed to find {key}, {property}";
+            }
+            search = search ?? $"Failed to find {key}, {property}";
+            await Context.Channel.SendMessageAsync(search);
         }
         
         /// <summary>
@@ -46,6 +73,7 @@ namespace CommonErrorsBot.CEB.Commands
         /// <param name="args"></param>
         /// <returns></returns>
         [Command("AddCommonError")]
+        [RequireUserPermission(GuildPermission.Administrator)]
         public async Task _addCommonError([Remainder]string args)
         {
             // Split the args at |
@@ -94,6 +122,7 @@ namespace CommonErrorsBot.CEB.Commands
         /// <param name="args"></param>
         /// <returns></returns>
         [Command("RemoveCommonError")]
+        [RequireUserPermission(GuildPermission.Administrator)]
         public async Task _removeCommonError([Remainder] string args)
         {
             // Attempt to remove the argument

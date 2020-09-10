@@ -4,7 +4,7 @@
     "Response": "Looks like you're missing VecMath. https://discordapp.com/channels/594335572173258752/637484447205425153/643882343911915541"
   },
   "NoSuchMethodError": {
-   "Search": "NoSuchMethodError java.lang.NoSuchMethodError: net.minecraft.client.renderer.EntityRenderer$1",
+    "Search": "NoSuchMethodError java.lang.NoSuchMethodError: net.minecraft.client.renderer.EntityRenderer$1",
     "Response": "In order to fix this, just remove all the $ from the class names, and new instances of it. https://discordapp.com/channels/594335572173258752/637484447205425153/644343295853723662"
   }
 }

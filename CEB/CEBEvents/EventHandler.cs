@@ -39,6 +39,12 @@ namespace CommonErrorsBot.CEB.CEBEvents
             // Deserialize the result of that call to a Data Object
             var dataObject = JsonConvert.DeserializeObject<Data>(responseString);
 
+            if (dataObject.IsErroredOnProcessing)
+            {
+                Console.WriteLine("Errored on processing");
+                return;
+            }
+            
             // Get the text inside the dataObject 
             var parsedText = dataObject.ParsedResults[0].ParsedText;
 

@@ -95,13 +95,13 @@ namespace CommonErrorsBot.CEB
             if (message != null && message.Author.IsBot) return;
 
             var argPos = 0;
-            if (message.HasStringPrefix(_prefix, ref argPos))
+            if (message.HasStringPrefix(_prefix, ref argPos)) // If the message contains the prefix
             {
-                var result = await _commands.ExecuteAsync(context, argPos, _services);
-                if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);
-                if (result.Error.Equals(CommandError.UnmetPrecondition))
-                    if (message != null)
-                        await message.Channel.SendMessageAsync(result.ErrorReason);
+                var result = await _commands.ExecuteAsync(context, argPos, _services); // Execute  the respective command
+                if (!result.IsSuccess) Console.WriteLine(result.ErrorReason); // If the command failed, output the error reason
+                if (result.Error.Equals(CommandError.UnmetPrecondition)) 
+                    if (message != null) // If the message is not null (we have an error to send the user)
+                        await message.Channel.SendMessageAsync(result.ErrorReason); // send the error reason
             }
         }
         

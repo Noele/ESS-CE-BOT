@@ -40,16 +40,21 @@ namespace CommonErrorsBot.CEB.Commands
                 if (output.Length > 1800)
                 {
                     output.Append("```");
-                    await Context.Channel.SendMessageAsync(output.ToString());
-                    output = new StringBuilder();
-                    output.Append("```\n");
+                    await Context.Channel.SendMessageAsync(output.ToString()); // We went over 1800 characters   
+                    output = new StringBuilder();                                   // Discord only allows 2000 per message
+                    output.Append("```\n");                                         // This makes sure the output can be sent in full
                 }
             }
             output.Append("```");
 
             await Context.Channel.SendMessageAsync(output.ToString());
         }
-
+        
+        /// <summary>
+        /// Sends a message of the key and property of a common error
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="property"></param>
         [Command("GetCommonErrorProperty")]
         [RequireUserPermission(GuildPermission.Administrator)]
         public async Task _getCommonErrorProperty(string key, string property)
@@ -57,14 +62,14 @@ namespace CommonErrorsBot.CEB.Commands
             string search;
             try
             {
-                search = (string) Bot.CommonErrors.SelectToken(key).SelectToken(property);
+                search = (string) Bot.CommonErrors.SelectToken(key).SelectToken(property); // Attempt to get the key and property 
             }
             catch (Exception e)
             {
-                search = $"Failed to find {key}, {property}";
+                search = $"Failed to find {key}, {property}"; // We failed so lets default to an error message
             }
-            search = search ?? $"Failed to find {key}, {property}";
-            await Context.Channel.SendMessageAsync(search);
+            search = search ?? $"Failed to find {key}, {property}"; // This is to solve a bug where the second arg is correct, and the first is wrong, this ensures we get an error message
+            await Context.Channel.SendMessageAsync(search); // Send the output
         }
         
         /// <summary>

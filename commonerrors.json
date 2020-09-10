@@ -1,0 +1,4 @@
+{
+  "Matrix4f cannot be resolved to a type": "Looks like you're missing VecMath. https://discordapp.com/channels/594335572173258752/637484447205425153/643882343911915541",
+  "NoSuchMethodError java.lang.NoSuchMethodError: net.minecraft.client.renderer.EntityRenderer$1": "In order to fix this, just remove all the $ from the class names, and new instances of it. https://discordapp.com/channels/594335572173258752/637484447205425153/644343295853723662"
+}
